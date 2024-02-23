@@ -1,0 +1,1 @@
+{"type":"module","dependencies":{"cors":"^2.8.5","crypto":"^1.0.1","express":"^4.18.2","jsonwebtoken":"^9.0.2","mongoose":"^8.1.1","zod":"^3.22.4"}}
