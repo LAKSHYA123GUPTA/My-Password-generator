@@ -1,6 +1,4 @@
 import { Suspense, lazy } from "react";
-// import reactLogo from './assets/react.svg'
-// import viteLogo from '/vite.svg'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
 const Landing = lazy(() => import("./components/Landing"));
@@ -11,10 +9,9 @@ const Generate = lazy(() => import("./components/Generator"));
 import { RecoilRoot } from "recoil";
 import Appbar from "./components/Appbar";
 
-// import { ChakraProvider } from '@chakra-ui/react'
+
 function App() {
   return (
-    
     <RecoilRoot>
       <div
         style={{
@@ -31,7 +28,7 @@ function App() {
                 <Suspense fallback={"loading..."}>{<Landing />}</Suspense>
               }
             />
-            
+
             <Route
               path="/signin"
               element={
@@ -54,7 +51,6 @@ function App() {
         </BrowserRouter>
       </div>
     </RecoilRoot>
-    
   );
 }
 

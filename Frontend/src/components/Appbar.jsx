@@ -4,7 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { isOpen } from "../Atoms/UserAtom";
 export default function Appbar() {
   const navigate = useNavigate();
-  const setIsOpen= useSetRecoilState(isOpen);
+  const setIsOpen = useSetRecoilState(isOpen);
   return (
     <div
       style={{

@@ -1,6 +1,19 @@
 import { useNavigate } from "react-router-dom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { browserPermit, browserPermitstore, firstCount, genAvail, pass, permit, remember, uname, user } from "../Atoms/UserAtom";
+import {
+  browserPermit,
+  browserPermitstore,
+  firstCount,
+  firstTimer,
+  genAvail,
+  pass,
+  permit,
+  remember,
+  tempToken,
+  tokenData,
+  uname,
+  user,
+} from "../Atoms/UserAtom";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
@@ -20,7 +33,7 @@ import PasswordText from "./PasswordText";
 export default function Signup() {
   const navigate = useNavigate();
   const [username, setUsername] = useRecoilState(user);
-  const [password, setPassword] = useRecoilState(pass);
+  const password = useRecoilValue(pass);
   const ref1 = useRef();
   const ref2 = useRef();
   const mess = useRef();
@@ -29,25 +42,31 @@ export default function Signup() {
   const setFirstCount = useSetRecoilState(firstCount);
   const [genavail, setGenAvail] = useRecoilState(genAvail);
   const [browserAllow, setbrowserAllow] = useRecoilState(browserPermit);
-  const [token, setToken] = useState({});
-  const permited=useRecoilValue(permit);
-  const browserpermit=useRecoilValue(browserPermitstore);
+  const [token, setToken] = useRecoilState(tokenData);
+  const permited = useRecoilValue(permit);
+  const browserpermit = useRecoilValue(browserPermitstore);
   const rememberme = useRecoilValue(remember);
+  const [temptoken, setTempToken] = useRecoilState(tempToken);
+  const [first, setFirst] = useRecoilState(firstTimer);
 
+  const remove = "tempData";
 
- 
-  useEffect(()=>{
-    
-    if(browserpermit===false)
-    {
-     return setbrowserAllow(true);
+  if (
+    (localStorage.getItem(remove) !== null ||
+      localStorage.getItem(remove) !== undefined) &&
+    first === false
+  ) {
+    localStorage.removeItem(remove);
+    setFirst(true);
+  }
+
+  useEffect(() => {
+    if (browserpermit === false) {
+      return setbrowserAllow(true);
     }
+  }, [permited]);
 
-  
-  },[permited])
-  
-  const deviceID=browserpermit;
-  setFirstCount((c) => c + 1);
+  const deviceID = browserpermit;
   useEffect(() => {
     if (message === "Invalid inputs!!") {
       console.log(message);
@@ -65,11 +84,12 @@ export default function Signup() {
     }
 
     if (message === "User created successfully") {
-      //  console.log(message);
-
       setTimeout(() => {
         setUname(username);
-        localStorage.setItem("tokendata", JSON.stringify(token));
+        if (rememberme === true)
+          localStorage.setItem("tokendata", JSON.stringify(token));
+        if (rememberme === false)
+          localStorage.setItem("tempData", JSON.stringify(temptoken));
         setGenAvail((c) => c + 1);
         navigate("/generator");
       }, 2000);
@@ -127,9 +147,6 @@ export default function Signup() {
                 variant={"contained"}
                 onClick={async () => {
                   if (username === "") {
-                    // ref1.current.style.border = '2px solid red';
-
-                    // ref1.current.setAttribute('autofocus', true);
                     ref1.current.setAttribute(
                       "placeholder",
                       "Missing Username!!"
@@ -140,7 +157,6 @@ export default function Signup() {
                       `border: solid red 2px; border-radius: 5px;`
                     );
                     setTimeout(() => {
-                      // ref1.current.setAttribute("style","outlineColor:'red'")
                       ref1.current.focus();
                       ref1.current.setAttribute("style", " ");
                     }, 1000);
@@ -158,7 +174,6 @@ export default function Signup() {
                       `border: solid red 2px; border-radius: 5px;`
                     );
                     setTimeout(() => {
-                      // ref1.current.setAttribute("style","outlineColor:'red'")
                       ref2.current.focus();
                       ref2.current.setAttribute("style", "");
                     }, 1000);
@@ -166,10 +181,9 @@ export default function Signup() {
                     return;
                   }
                   try {
-                    const salt= generateSalt();
-                   const resulted =await convert(password,salt);
-                    console.log("here is salt   "+salt);
-                    console.log("here is password:    "+resulted);
+                    const salt = generateSalt();
+                    const resulted = await convert(password, salt);
+
                     const res = await fetch(
                       "http://localhost:3000/user/signup",
                       {
@@ -178,17 +192,21 @@ export default function Signup() {
                           username: username,
                           pass: resulted,
                           salt: salt,
-                          deviceId:deviceID,
-                          remember:rememberme
+                          deviceId: deviceID,
+                          remember: rememberme,
                         }),
                         headers: {
                           "Content-Type": "application/json",
                         },
                       }
                     );
-                    const data = await res.json();
-                    setMessage(data.msg);
-                    setToken({ finalToken: data.token });
+                    const maindata = await res.json();
+                    setMessage(maindata.msg);
+                    if (rememberme === true)
+                      setToken({ finalToken: maindata.token });
+                    if (rememberme === false)
+                      setTempToken({ finalToken: maindata.token });
+                    setFirstCount((c) => c + 1);
                   } catch (error) {
                     console.error("here");
                   }
@@ -206,9 +224,8 @@ export default function Signup() {
       <div style={{ position: "fixed", bottom: "80px", right: "90px" }}>
         {genavail !== 0 ? <Fabicon /> : null}
       </div>
-      {browserAllow? <Alert /> : null}
-      {(permited===0)? <PermissionBanner /> : null}
-      
+      {browserAllow ? <Alert /> : null}
+      {permited === 0 ? <PermissionBanner /> : null}
     </div>
   );
 }

@@ -1,6 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// import { useRecoilState} from "recoil";
-// import { pass, user } from "../Atoms/UserAtom";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,
@@ -10,7 +8,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { browserPermit, browserPermitstore, firstCount, genAvail, pass, permit, remember, uname } from "../Atoms/UserAtom";
+import {
+  browserPermit,
+  browserPermitstore,
+  firstCount,
+  firstTimer,
+  genAvail,
+  pass,
+  permit,
+  remember,
+  tabArray,
+  tempToken,
+  tokenData,
+  uname,
+} from "../Atoms/UserAtom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Fabicon from "./FAB";
 import CheckboxRemember from "./Checkbox";
@@ -27,62 +38,67 @@ export default function Signin() {
   const ref2 = useRef();
   const mess = useRef();
   const [message, setMessage] = useState();
-  const [token, setToken] = useState({});
+  const [token, setToken] = useRecoilState(tokenData);
   const [salted, setSalt] = useState();
   const setUname = useSetRecoilState(uname);
   const [genavail, setGenAvail] = useRecoilState(genAvail);
   const setFirstCount = useSetRecoilState(firstCount);
-  const [rememberme,setRemember] = useRecoilState(remember);
-  const permited=useRecoilValue(permit);
-  const browserpermit=useRecoilValue(browserPermitstore);
+  const [rememberme, setRemember] = useRecoilState(remember);
+  const permited = useRecoilValue(permit);
+  const browserpermit = useRecoilValue(browserPermitstore);
   const [browserAllow, setbrowserAllow] = useRecoilState(browserPermit);
-  async function finalFetch(){
+  const setArray = useSetRecoilState(tabArray);
+  const [temptoken, setTempToken] = useRecoilState(tempToken);
+  const [first, setFirst] = useRecoilState(firstTimer);
+
+  const remove = "tempData";
+
+  if (
+    (localStorage.getItem(remove) !== null ||
+      localStorage.getItem(remove) !== undefined) &&
+    first === false
+  ) {
+    localStorage.removeItem(remove);
+    setFirst(true);
+  }
+  async function finalFetch() {
     try {
-      if(salted){
-        const converted= await convert(password,salted);
-      const res = await fetch(
-        "http://localhost:3000/user/signin",
-        {
+      if (salted) {
+        const converted = await convert(password, salted);
+        const res = await fetch("http://localhost:3000/user/signin", {
           method: "POST",
           body: JSON.stringify({
             username: username,
             pass: converted,
-            deviceId:deviceID,
-            remember:rememberme
-
+            deviceId: deviceID,
+            remember: rememberme,
           }),
           headers: {
             "Content-Type": "application/json",
           },
-        }
-      );
-      const data = await res.json();
-      setMessage(data.msg);
-      setToken({ finalToken: data.token });
-      setSalt(undefined);
-      setRemember(false);
+        });
+        const data = await res.json();
+        setMessage(data.msg);
+        if (rememberme === true) setToken({ finalToken: data.token });
+        if (rememberme === false) setTempToken({ finalToken: data.token });
+        setArray(data.array);
+        setSalt(undefined);
+        setRemember(false);
+        setFirstCount((c) => c + 1);
       }
     } catch (error) {
-      console.error("this is by signin:    "+error);
+      console.error("this is by signin:    " + error);
     }
   }
-  useEffect(()=>{
-    
-    if(browserpermit===false)
-    {
-     return setbrowserAllow(true);
+  useEffect(() => {
+    if (browserpermit === false) {
+      return setbrowserAllow(true);
     }
-
-  
-  },[permited])
-  useEffect(()=>{
-    
-   finalFetch();
-  
-  
-  },[salted])
-  const deviceID=browserpermit;
-  setFirstCount((c) => c + 1);
+  }, [permited]);
+  useEffect(() => {
+    finalFetch();
+  }, [salted]);
+  const deviceID = browserpermit;
   useEffect(() => {
     if (message) {
       console.log(message);
@@ -92,10 +108,13 @@ export default function Signin() {
     if (count !== 0) {
       setUname(username);
       setGenAvail((c) => c + 1);
-      localStorage.setItem("tokendata", JSON.stringify(token));
+      if (rememberme === true)
+        localStorage.setItem("tokendata", JSON.stringify(token));
+      if (rememberme === false)
+        localStorage.setItem("tempData", JSON.stringify(temptoken));
       navigate("/generator");
     } else return setCount(count + 1);
-  }, [token]);
+  }, [token, temptoken]);
   return (
     <div
       style={{
@@ -148,9 +167,6 @@ export default function Signin() {
                 variant={"contained"}
                 onClick={async () => {
                   if (username === "") {
-                    // ref1.current.style.border = '2px solid red';
-
-                    // ref1.current.setAttribute('autofocus', true);
                     ref1.current.setAttribute(
                       "placeholder",
                       "Missing Username!!"
@@ -161,7 +177,6 @@ export default function Signin() {
                       `border: solid red 2px; border-radius: 5px;`
                     );
                     setTimeout(() => {
-                      // ref1.current.setAttribute("style","outlineColor:'red'")
                       ref1.current.focus();
                       ref1.current.setAttribute("style", " ");
                     }, 1000);
@@ -179,7 +194,6 @@ export default function Signin() {
                       `border: solid red 2px; border-radius: 5px;`
                     );
                     setTimeout(() => {
-                      // ref1.current.setAttribute("style","outlineColor:'red'")
                       ref2.current.focus();
                       ref2.current.setAttribute("style", "");
                     }, 1000);
@@ -187,31 +201,21 @@ export default function Signin() {
                     return;
                   }
                   try {
-                    const res = await fetch(
-                      "http://localhost:3000/user/data",
-                      {
-                        method: "POST",
-                        body: JSON.stringify({
-                          username: username,
-                          
-
-                        }),
-                        headers: {
-                          "Content-Type": "application/json",
-                        },
-                      }
-                    );
+                    const res = await fetch("http://localhost:3000/user/data", {
+                      method: "POST",
+                      body: JSON.stringify({
+                        username: username,
+                      }),
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                    });
                     const data = await res.json();
-                    if(data.msg)
-                    setMessage(data.msg);
-                    else
-                    setSalt(data.salt);
-                    
-                    
+                    if (data.msg) setMessage(data.msg);
+                    else setSalt(data.salt);
                   } catch (error) {
-                    console.error("This is by data:   "+error);
+                    console.error("This is by data:   " + error);
                   }
-                  
                 }}
               >
                 Signin
@@ -226,8 +230,8 @@ export default function Signin() {
       <div style={{ position: "fixed", bottom: "80px", right: "90px" }}>
         {genavail !== 0 ? <Fabicon /> : null}
       </div>
-      {browserAllow? <Alert /> : null}
-      {(permited===0)? <PermissionBanner /> : null}
+      {browserAllow ? <Alert /> : null}
+      {permited === 0 ? <PermissionBanner /> : null}
     </div>
   );
 }

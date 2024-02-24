@@ -68,6 +68,10 @@ import { atom } from "recoil";
    key:"tokenData",
    default:undefined
  })
+ const tempToken=atom({
+   key:"tempToken",
+   default:undefined
+ })
  const salt=atom({
    key:"salt",
    default:undefined
@@ -76,6 +80,11 @@ import { atom } from "recoil";
    key:"remember",
    default:false
  })
+ const firstTimer=atom({
+   key:"firstTimer",
+   default:false
+ })
+ 
  
 
-export  {salt,user,pass,uname,firstCount,genAvail,isOpen,addOpen,hover,tabArray,message,Click,add,storePass,tokenData,permit,browserPermit, browserPermitstore,remember};
+export  {firstTimer,tempToken,salt,user,pass,uname,firstCount,genAvail,isOpen,addOpen,hover,tabArray,message,Click,add,storePass,tokenData,permit,browserPermit, browserPermitstore,remember};

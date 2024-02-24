@@ -13,8 +13,6 @@ export default function Fabicon() {
           navigate("/generator");
         }}
       >
-        {/* <AddIcon /> */}
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

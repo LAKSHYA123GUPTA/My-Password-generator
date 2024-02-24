@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-// import * as React from 'react';
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import React from "react";
@@ -13,9 +12,9 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Button, Card, CardContent  } from "@mui/material";
-import { uname } from "../Atoms/UserAtom";
-import { useRecoilValue } from "recoil";
+import { Button, Card, CardContent } from "@mui/material";
+import { firstTimer, tempToken, uname } from "../Atoms/UserAtom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import CopyPass from "./Copypass";
 import WarningComponent from "./WarningComponent";
 export default function Generate() {
@@ -32,7 +31,19 @@ export default function Generate() {
   const [showWarning, setShowWarning] = useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const temptoken = useRecoilValue(tempToken);
+  const [first, setFirst] = useRecoilState(firstTimer);
 
+  const remove = "tempData";
+
+  if (
+    (localStorage.getItem(remove) !== null ||
+      localStorage.getItem(remove) !== undefined) &&
+    first === false
+  ) {
+    localStorage.removeItem(remove);
+    setFirst(true);
+  }
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
@@ -59,19 +70,14 @@ export default function Generate() {
 
   useEffect(() => {
     if (token) {
+      
       func();
     }
   }, [token, regen]);
   useEffect(() => {
     if (pname) notify();
   }, []);
-  //   useEffect(() => {
-  //     // button.current.removeAttribute('disabled');
-
-  //     if (val) {
-  //         button.current.removeAttribute('disabled');
-  //     }
-  //   }, [val]);
+  
   async function func() {
     try {
       const res = await fetch("http://localhost:3000/user/password", {
@@ -128,12 +134,7 @@ export default function Generate() {
         }}
       >
         <CardContent>
-          {/* <TextField
-          ref={inp}
           
-          placeholder="Generated Password"
-          value={valsec}
-        ></TextField> */}
           <FormControl sx={{ m: 1, width: "27ch" }} variant="outlined">
             <InputLabel
               htmlFor="outlined-adornment-password"
@@ -162,7 +163,7 @@ export default function Generate() {
               }
               sx={{
                 "&:focus fieldset": {
-                  borderColor: "#0000FF", // Set the outline color to blue when focused
+                  borderColor: "#0000FF", 
                 },
               }}
               label="Generated Password"
@@ -205,7 +206,7 @@ export default function Generate() {
               max={16}
               sx={{
                 "& .MuiSlider-thumb": {
-                  backgroundColor: "lightgreen", // Change the color of the slider thumb here
+                  backgroundColor: "lightgreen", 
                 },
               }}
             />
@@ -234,7 +235,7 @@ export default function Generate() {
               max={5}
               sx={{
                 "& .MuiSlider-thumb": {
-                  backgroundColor: "skyblue", // Change the color of the slider thumb here
+                  backgroundColor: "skyblue",
                 },
               }}
             />
@@ -242,18 +243,28 @@ export default function Generate() {
           <Button
             variant="contained"
             onClick={() => {
-              const data = localStorage.getItem("tokendata");
+              if (temptoken !== undefined) {
+                const data = localStorage.getItem("tempData");
 
-              if (data) {
-                setToken(JSON.parse(data).finalToken);
+                if (data) {
+                  setToken(JSON.parse(data).finalToken);
+                }
+                setRegen(regen + 1);
+                setShowWarning(false);
+              } else {
+                const data = localStorage.getItem("tokendata");
+
+                if (data) {
+                  setToken(JSON.parse(data).finalToken);
+                }
+                setRegen(regen + 1);
+                setShowWarning(false);
               }
-              setRegen(regen + 1);
-              setShowWarning(false);
             }}
           >
             Generate Password
           </Button>
-          {/* <Button variant="contained" onClick={notify}>click for toast</Button> */}
+          
           {showWarning && <WarningComponent />}
         </CardContent>
       </Card>

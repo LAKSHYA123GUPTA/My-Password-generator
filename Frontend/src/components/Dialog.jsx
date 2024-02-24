@@ -3,7 +3,6 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { genAvail, uname } from "../Atoms/UserAtom";
@@ -17,13 +16,13 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  background: "#222", // Background color for dark mode
-  color: "#fff", // Text color for dark mode
+  background: "#222", 
+  color: "#fff", 
 };
 
 export default function Dialog() {
   const [open, setOpen] = useState(true);
-  const navigate = useNavigate();
+
   const handleClose = () => setOpen(false);
   const pname = useRecoilValue(uname);
   const setGenAvail = useSetRecoilState(genAvail);
@@ -63,8 +62,6 @@ export default function Dialog() {
               onClick={() => {
                 handleClose();
                 setGenAvail((c) => c + 1);
-
-                
               }}
               autoFocus
               sx={{ mt: 2, backgroundColor: "#888888", color: "green" }}
