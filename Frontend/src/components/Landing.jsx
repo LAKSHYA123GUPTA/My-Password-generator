@@ -66,6 +66,7 @@ export default function Landing() {
     }
     if (finaldata.msg === "Allow auto-login") {
       setUname(finaldata.username);
+      if(genavail!==0)
       setArray(finaldata.array);
       setn(n + 2);
 
@@ -97,14 +98,17 @@ export default function Landing() {
 
       if (info) {
         setTimeout(() => {
+
           fetching(info);
-          setData(info);
+          
         }, 400);
+        setData(JSON.parse(info));
       }
+      if(genavail!==0)
       setFirstCount((c) => c + 1);
-      return;
+      
     }
-  }, [permited]);
+  }, [permited,genavail]);
 
   return (
     <div
@@ -118,7 +122,7 @@ export default function Landing() {
         padding: 0,
       }}
     >
-      Hi Mommy on Landing page.
+      Hi on Landing page.
       <DrawerCompo />
       <div style={{ position: "fixed", bottom: "80px", right: "90px" }}>
         {genavail !== 0 ? <Fabicon /> : null}

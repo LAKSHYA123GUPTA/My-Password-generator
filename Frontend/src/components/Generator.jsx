@@ -37,7 +37,7 @@ export default function Generate() {
   const remove = "tempData";
 
   if (
-    (localStorage.getItem(remove) !== null ||
+    (localStorage.getItem(remove) !== null &&
       localStorage.getItem(remove) !== undefined) &&
     first === false
   ) {
@@ -243,7 +243,7 @@ export default function Generate() {
           <Button
             variant="contained"
             onClick={() => {
-              if (temptoken !== undefined) {
+              if (temptoken !== undefined&& temptoken!==null) {
                 const data = localStorage.getItem("tempData");
 
                 if (data) {

@@ -19,11 +19,12 @@ export default function DrawerCompo() {
   const Array = useRecoilValue(tabArray);
   const token = useRecoilValue(tokenData);
   const temptoken = useRecoilValue(tempToken);
-
+  
   async function uploadingArray() {
     let finaldata;
 
-    if (token && temptoken === undefined) {
+    if (token && (temptoken === undefined || temptoken===null)) {
+      // console.log(token.finalToken+"    from drawer.jsx");
       try {
         const res = await fetch("http://localhost:3000/user/manager", {
           method: "POST",
@@ -36,9 +37,10 @@ export default function DrawerCompo() {
           },
         });
         finaldata = await res.json();
+        console.log("in right condition from drawer.jsx"+Array);    ////////
       } catch (error) {
         return console.log(
-          "Error in either res.json resolve or uploading /manager resolve:   " +
+          "Error in either res.json resolve or uploading /manager resolve:   from token" +
             error
         );
       }
@@ -62,7 +64,7 @@ export default function DrawerCompo() {
         );
       }
     }
-    if (temptoken !== undefined) {
+    if (temptoken !== undefined && temptoken!==null) {
       try {
         const res = await fetch("http://localhost:3000/user/manager", {
           method: "POST",
@@ -77,7 +79,7 @@ export default function DrawerCompo() {
         finaldata = await res.json();
       } catch (error) {
         return console.log(
-          "Error in either res.json resolve or uploading /manager resolve:   " +
+          "Error in either res.json resolve or uploading /manager resolve:   from temptoken" +
             error
         );
       }
@@ -103,7 +105,9 @@ export default function DrawerCompo() {
     }
   }
   useEffect(() => {
-    if (Array.length !== 0) uploadingArray();
+    if (Array.length !== 0) 
+    { console.log("putme in");
+      uploadingArray();}
   }, [Array]);
   const toggleDrawer = (open) => (event) => {
     if (

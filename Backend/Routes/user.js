@@ -19,18 +19,16 @@ router.post("/signup", async (req, res) => {
   const deviceID = req.body.deviceId;
   const remember = req.body.remember;
   const salt = req.body.salt;
- 
+
   let arr;
   if (remember === true) {
     arr = [deviceID];
   } else arr = null;
   const response = await User.findOne({ username: username });
   if (response)
-    return res
-      .status(200)
-      .json({
-        msg: "User or the same username already exists!!, choose another username or try Signing in",
-      });
+    return res.status(200).json({
+      msg: "User or the same username already exists!!, choose another username or try Signing in",
+    });
   const check = validSchema.safeParse({ username, password });
   if (!check.success) {
     return res.status(403).json({ msg: "Invalid inputs!!" });
@@ -45,10 +43,9 @@ router.post("/signup", async (req, res) => {
       salt: salt,
     });
     const id = user._id.toString();
-    
 
     const token = jwt.sign({ user_id: id }, jwtKey);
-    return res.status(200).json({ msg: "User created successfully", token });
+    return res.status(200).json({ msg: "User created successfully", token,array:user.array });
   } catch (error) {
     return res.status(500).json({ msg: "Oops! server down, try later" });
   }
@@ -57,9 +54,9 @@ router.post("/signin", siginMidlleware, (req, res) => {
   const username = req.body.username;
   const id = req.user_id.id;
   const passArray = req.array.passArray;
- 
+
   const token = jwt.sign({ user_id: id }, jwtKey);
-  res.json({ token: token, array: passArray });
+  res.status(200).json({msg:"User signed in successfully", token: token, array: passArray });
 });
 router.post("/data", async (req, res) => {
   const username = req.body.username;
@@ -67,11 +64,9 @@ router.post("/data", async (req, res) => {
     const response = await User.findOne({ username: username });
     if (response) return res.json({ salt: response.salt });
 
-    return res
-      .status(411)
-      .json({
-        msg: "Invalid credentials, check your credentials or try signup first /data",
-      });
+    return res.status(411).json({
+      msg: "Invalid credentials, check your credentials or try signup first /data",
+    });
   } catch (error) {
     return res
       .status(500)
@@ -79,36 +74,34 @@ router.post("/data", async (req, res) => {
   }
 });
 router.post("/auto", initialFetchMiddleware, async (req, res) => {
-  
-
-  return res
-    .status(200)
-    .json({
-      msg: "Allow auto-login",
-      username: req.response.username,
-      array: req.response.array,
-    });
-  
+  return res.status(200).json({
+    msg: "Allow auto-login",
+    username: req.response.username,
+    array: req.response.array,
+  });
 });
 
 router.post("/manager", async (req, res) => {
   const passArray = req.body.Array;
   const data = req.body.token;
-  
   let send;
   try {
+
     send = jwt.verify(data, jwtKey);
+
   } catch (error) {
-    return res
-      .status(200)
-      .json({ msg: "re-login, either token is expired or invalid" });
+    return res.status(200).json({ msg: "re-login, either token is expired or invalid" });
+      
+      
   }
   const id = send.user_id;
   try {
     const response = await User.updateOne(
       { _id: id },
-      {
-        array: passArray,
+      {               
+        $set: {
+          array: passArray,
+        }
       }
     );
     if (response.array.length !== 0) {

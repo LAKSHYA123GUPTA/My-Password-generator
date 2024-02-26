@@ -9,6 +9,7 @@ import {
   pass,
   permit,
   remember,
+  tabArray,
   tempToken,
   tokenData,
   uname,
@@ -48,6 +49,7 @@ export default function Signup() {
   const rememberme = useRecoilValue(remember);
   const [temptoken, setTempToken] = useRecoilState(tempToken);
   const [first, setFirst] = useRecoilState(firstTimer);
+  const setArray = useSetRecoilState(tabArray);
 
   const remove = "tempData";
 
@@ -88,7 +90,7 @@ export default function Signup() {
         setUname(username);
         if (rememberme === true)
           localStorage.setItem("tokendata", JSON.stringify(token));
-        if (rememberme === false)
+        if (rememberme === false &&( temptoken!==undefined&& temptoken!==null))
           localStorage.setItem("tempData", JSON.stringify(temptoken));
         setGenAvail((c) => c + 1);
         navigate("/generator");
@@ -202,6 +204,7 @@ export default function Signup() {
                     );
                     const maindata = await res.json();
                     setMessage(maindata.msg);
+                    setArray(maindata.array);
                     if (rememberme === true)
                       setToken({ finalToken: maindata.token });
                     if (rememberme === false)

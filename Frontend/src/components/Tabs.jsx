@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { add, message, storePass, tabArray } from "../Atoms/UserAtom";
+import { add, genAvail, message, storePass, tabArray } from "../Atoms/UserAtom";
 import IconButton from "@mui/material/IconButton";
 import Creator from "./SpAvatar";
 import { useEffect } from "react";
@@ -21,13 +21,17 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Tabs() {
   const webname = useRecoilValue(message);
   const webPass = useRecoilValue(storePass);
-
+  const genavail = useRecoilValue(genAvail);
   const [array, setArray] = useRecoilState(tabArray);
   const [added, setAdded] = useRecoilState(add);
   useEffect(() => {
     if (added && webname !== "") {
       setArray([...array, { message: webname, password: webPass }]);
-      setAdded(false);
+      console.log(array+ " from tabs.jsx");
+      // setTimeout(()=>{
+        setAdded(false);
+      // },50);
+     
     }
   }, [added]);
 
@@ -47,7 +51,7 @@ export default function Tabs() {
         </Typography>
       ) : null}
       {array.map((element) => {
-        if (array.length !== 0 && element !== "") {
+        if (array.length !== 0 && element !== ""  && genavail!==0 ) {
           return (
             // eslint-disable-next-line react/jsx-key
             <Item

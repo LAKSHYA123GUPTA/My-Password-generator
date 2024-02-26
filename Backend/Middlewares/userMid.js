@@ -11,6 +11,7 @@ export default async function siginMidlleware(req, res, next) {
       password: password,
     });
     if (response) {
+        // console.log("response is there");
       req.user_id = { id: response._id.toString() };
       req.array = { passArray: response.array };
       let arr = response.deviceInfoArray;
@@ -34,7 +35,7 @@ export default async function siginMidlleware(req, res, next) {
       next();
     } else
       return res
-        .status(200)
+        .status(411)
         .json({
           msg: "Invalid credentials, check your credentials or try signup first ",
         });

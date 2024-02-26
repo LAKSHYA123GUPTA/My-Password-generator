@@ -33,7 +33,6 @@ export default function Signin() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const password = useRecoilValue(pass);
-  const [count, setCount] = useState(0);
   const ref1 = useRef();
   const ref2 = useRef();
   const mess = useRef();
@@ -43,7 +42,7 @@ export default function Signin() {
   const setUname = useSetRecoilState(uname);
   const [genavail, setGenAvail] = useRecoilState(genAvail);
   const setFirstCount = useSetRecoilState(firstCount);
-  const [rememberme, setRemember] = useRecoilState(remember);
+  const rememberme = useRecoilValue(remember);
   const permited = useRecoilValue(permit);
   const browserpermit = useRecoilValue(browserPermitstore);
   const [browserAllow, setbrowserAllow] = useRecoilState(browserPermit);
@@ -54,7 +53,7 @@ export default function Signin() {
   const remove = "tempData";
 
   if (
-    (localStorage.getItem(remove) !== null ||
+    (localStorage.getItem(remove) !== null &&
       localStorage.getItem(remove) !== undefined) &&
     first === false
   ) {
@@ -64,6 +63,7 @@ export default function Signin() {
   async function finalFetch() {
     try {
       if (salted) {
+        console.log(salted);
         const converted = await convert(password, salted);
         const res = await fetch("http://localhost:3000/user/signin", {
           method: "POST",
@@ -83,9 +83,10 @@ export default function Signin() {
         if (rememberme === false) setTempToken({ finalToken: data.token });
         setArray(data.array);
         setSalt(undefined);
-        setRemember(false);
+        // setRemember(false);  ////////
         setFirstCount((c) => c + 1);
       }
+      // return console.log("error here!!");
     } catch (error) {
       console.error("this is by signin:    " + error);
     }
@@ -99,22 +100,37 @@ export default function Signin() {
     finalFetch();
   }, [salted]);
   const deviceID = browserpermit;
-  useEffect(() => {
-    if (message) {
-      console.log(message);
-      return;
-    }
+  // useEffect(() => {
+  //   if (message) {
+  //     console.log(message);
+  //     return;
+  //   }
 
-    if (count !== 0) {
-      setUname(username);
-      setGenAvail((c) => c + 1);
-      if (rememberme === true)
-        localStorage.setItem("tokendata", JSON.stringify(token));
-      if (rememberme === false)
-        localStorage.setItem("tempData", JSON.stringify(temptoken));
-      navigate("/generator");
-    } else return setCount(count + 1);
-  }, [token, temptoken]);
+  //   if (count !== 0) {
+  //     setUname(username);
+      
+  //     if (rememberme === true)
+  //       localStorage.setItem("tokendata", JSON.stringify(token));
+  //     if (rememberme === false && (temptoken!==undefined &&temptoken!==null))
+  //       localStorage.setItem("tempData", JSON.stringify(temptoken));
+  //       setGenAvail((c) => c + 1);
+  //     // navigate("/generator");
+  //   } else return setCount(count + 1);
+  // }, [token, temptoken]);
+  useEffect(() => {
+   
+    if (message === "User signed in successfully") {
+      
+        setUname(username);
+        if (rememberme === true)
+          localStorage.setItem("tokendata", JSON.stringify(token));
+        if (rememberme === false &&( temptoken!==undefined&& temptoken!==null))
+          localStorage.setItem("tempData", JSON.stringify(temptoken));
+        setGenAvail((c) => c + 1);
+        navigate("/generator");
+      
+    }
+  }, [message]);
   return (
     <div
       style={{
