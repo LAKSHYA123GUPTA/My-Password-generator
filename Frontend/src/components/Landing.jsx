@@ -27,7 +27,7 @@ export default function Landing() {
   const browserpermit = useRecoilValue(browserPermitstore);
   const [browserAllow, setbrowserAllow] = useRecoilState(browserPermit);
   const [first, setFirst] = useRecoilState(firstTimer);
-
+ 
   const remove = "tempData";
 
   if (

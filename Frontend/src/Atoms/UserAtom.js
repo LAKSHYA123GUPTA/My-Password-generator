@@ -86,5 +86,6 @@ import { atom } from "recoil";
  })
  
  
+ 
 
 export  {firstTimer,tempToken,salt,user,pass,uname,firstCount,genAvail,isOpen,addOpen,hover,tabArray,message,Click,add,storePass,tokenData,permit,browserPermit, browserPermitstore,remember};

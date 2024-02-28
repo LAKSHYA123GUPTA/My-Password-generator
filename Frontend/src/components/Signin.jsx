@@ -63,7 +63,6 @@ export default function Signin() {
   async function finalFetch() {
     try {
       if (salted) {
-        console.log(salted);
         const converted = await convert(password, salted);
         const res = await fetch("http://localhost:3000/user/signin", {
           method: "POST",

@@ -1,14 +1,15 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
-import { useSetRecoilState } from "recoil";
-import { isOpen } from "../Atoms/UserAtom";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { genAvail, isOpen} from "../Atoms/UserAtom";
 export default function Appbar() {
   const navigate = useNavigate();
   const setIsOpen = useSetRecoilState(isOpen);
+  const genavail = useRecoilValue(genAvail);
   return (
     <div
       style={{
-        backgroundColor: "#eee",
+        backgroundColor: " #20c997",
         margin: "0px",
         padding: 0,
         width: "",
@@ -69,6 +70,18 @@ export default function Appbar() {
           >
             Signin
           </Button>
+          {genavail!==0? 
+          <div style={{display:'inline-flex', paddingLeft:'4px'}}>
+          <Button
+            variant="contained"
+            onClick={() => {
+              navigate("/logout");
+            }}
+          >
+            Logout
+          </Button>
+          </div>
+          :null}
         </div>
       </div>
     </div>

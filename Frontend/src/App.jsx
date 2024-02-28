@@ -5,6 +5,7 @@ const Landing = lazy(() => import("./components/Landing"));
 const Signin = lazy(() => import("./components/Signin"));
 const Signup = lazy(() => import("./components/SignUp"));
 const Generate = lazy(() => import("./components/Generator"));
+const Logout = lazy(() => import("./components/Logout"));
 
 import { RecoilRoot } from "recoil";
 import Appbar from "./components/Appbar";
@@ -45,6 +46,12 @@ function App() {
               path="/generator"
               element={
                 <Suspense fallback={"loading..."}>{<Generate />}</Suspense>
+              }
+            />
+            <Route
+              path="/logout"
+              element={
+                <Suspense fallback={"loading..."}>{<Logout />}</Suspense>
               }
             />
           </Routes>
