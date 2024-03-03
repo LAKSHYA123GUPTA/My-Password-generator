@@ -53,25 +53,25 @@ export default function Appbar() {
             Password Manager
           </Button>
           &nbsp;
-          <Button
+          {genavail===0?<Button
             variant="contained"
             onClick={() => {
               navigate("/signup");
             }}
           >
             Signup
-          </Button>
+          </Button>:null}
           &nbsp;
-          <Button
+          {genavail===0?<Button
             variant="contained"
             onClick={() => {
               navigate("/signin");
             }}
           >
             Signin
-          </Button>
+          </Button>:null}
           {genavail!==0? 
-          <div style={{display:'inline-flex', paddingLeft:'4px'}}>
+          <div style={{display:'inline-flex'}}>
           <Button
             variant="contained"
             onClick={() => {
@@ -80,7 +80,7 @@ export default function Appbar() {
           >
             Logout
           </Button>
-          </div>
+           </div>
           :null}
         </div>
       </div>

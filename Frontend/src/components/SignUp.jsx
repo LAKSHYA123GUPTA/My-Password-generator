@@ -103,9 +103,10 @@ export default function Signup() {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        height: "90vh",
+        height: "92.8vh",
         margin: 0,
-        backgroundImage: "linear-gradient(to left, #ccffaa, #ffe5ef)",
+        backgroundImage:'url(/lock-key-best-password.png)',
+        backgroundSize:'cover',
         padding: 0,
       }}
     >
