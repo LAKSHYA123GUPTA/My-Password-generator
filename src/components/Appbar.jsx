@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { genAvail, isOpen } from "../atoms/UserAtom.js";
@@ -27,11 +27,9 @@ export default function Appbar() {
         }}
       >
         <div style={{ order: 0 }}>
-          <Link to={"/Webos"} style={{ textDecoration: "none" }}>
-            <Typography color={"green"} variant="h4">
-              WebOS
-            </Typography>
-          </Link>
+          <Typography color={"green"} variant="h4">
+            PassMan
+          </Typography>
         </div>
         <div style={{ order: 1 }}>
           <Button
