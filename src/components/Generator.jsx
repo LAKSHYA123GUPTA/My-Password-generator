@@ -13,7 +13,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Button, Card, CardContent } from "@mui/material";
-import { firstTimer, tempToken, uname } from "../Atoms/UserAtom";
+import { firstTimer, tempToken, uname } from "../atoms/UserAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import CopyPass from "./Copypass";
 import WarningComponent from "./WarningComponent";

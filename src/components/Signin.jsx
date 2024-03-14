@@ -21,7 +21,7 @@ import {
   tempToken,
   tokenData,
   uname,
-} from "../Atoms/UserAtom";
+} from "../atoms/UserAtom";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import Fabicon from "./FAB";
 import CheckboxRemember from "./Checkbox";

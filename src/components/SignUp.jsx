@@ -14,7 +14,7 @@ import {
   tokenData,
   uname,
   user,
-} from "../Atoms/UserAtom";
+} from "../atoms/UserAtom";
 import { useEffect, useRef, useState } from "react";
 import {
   Button,

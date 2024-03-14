@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { genAvail, isOpen} from "../Atoms/UserAtom";
+import { genAvail, isOpen } from "../atoms/UserAtom.js";
 export default function Appbar() {
   const navigate = useNavigate();
   const setIsOpen = useSetRecoilState(isOpen);
@@ -53,35 +53,39 @@ export default function Appbar() {
             Password Manager
           </Button>
           &nbsp;
-          {genavail===0?<Button
-            variant="contained"
-            onClick={() => {
-              navigate("/signup");
-            }}
-          >
-            Signup
-          </Button>:null}
+          {genavail === 0 ? (
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Signup
+            </Button>
+          ) : null}
           &nbsp;
-          {genavail===0?<Button
-            variant="contained"
-            onClick={() => {
-              navigate("/signin");
-            }}
-          >
-            Signin
-          </Button>:null}
-          {genavail!==0? 
-          <div style={{display:'inline-flex'}}>
-          <Button
-            variant="contained"
-            onClick={() => {
-              navigate("/logout");
-            }}
-          >
-            Logout
-          </Button>
-           </div>
-          :null}
+          {genavail === 0 ? (
+            <Button
+              variant="contained"
+              onClick={() => {
+                navigate("/signin");
+              }}
+            >
+              Signin
+            </Button>
+          ) : null}
+          {genavail !== 0 ? (
+            <div style={{ display: "inline-flex" }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  navigate("/logout");
+                }}
+              >
+                Logout
+              </Button>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

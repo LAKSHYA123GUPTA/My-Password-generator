@@ -4,7 +4,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import { useSetRecoilState } from "recoil";
-import { pass } from "../Atoms/UserAtom";
+import { pass } from "../atoms/UserAtom";
 import { useState } from "react";
 
 export default function PasswordText() {

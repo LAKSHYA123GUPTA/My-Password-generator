@@ -12,7 +12,7 @@ import {
   tabArray,
   tokenData,
   uname,
-} from "../Atoms/UserAtom";
+} from "../atoms/UserAtom";
 import Fabicon from "./FAB";
 import PermissionBanner from "./PermissionBanner";
 import Alert from "./Alert";

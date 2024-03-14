@@ -6,9 +6,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import FormControl from "@mui/material/FormControl";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { add, addOpen, message, storePass } from "../Atoms/UserAtom";
+import { add, addOpen, message, storePass } from "../atoms/UserAtom";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+
 export default function Addpass() {
   const [open, setOpen] = useRecoilState(addOpen);
   //   const [click, setClick] = useRecoilState(Click);

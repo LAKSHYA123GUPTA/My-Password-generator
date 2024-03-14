@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import "react-toastify/dist/ReactToastify.css";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { genAvail, uname } from "../Atoms/UserAtom";
+import { genAvail, uname } from "../atoms/UserAtom.js";
 const style = {
   position: "absolute",
   top: "50%",
@@ -16,8 +16,8 @@ const style = {
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
-  background: "#222", 
-  color: "#fff", 
+  background: "#222",
+  color: "#fff",
 };
 
 export default function Dialog() {
