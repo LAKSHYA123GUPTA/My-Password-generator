@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {"name": "Lakshya Gupta", "email": "lakshyarp007pr@gmail.com"},
   "scripts": {
     "dev": "vite",
     "build": "vite build",

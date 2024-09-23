@@ -1,6 +1,6 @@
 import Checkbox from "@mui/material/Checkbox";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { permit, remember } from "../Atoms/UserAtom";
+import { permit, remember } from "../atoms/UserAtom";
 import Typography from "@mui/material/Typography";
 import { useEffect, useRef } from "react";
 export default function CheckboxRemember() {

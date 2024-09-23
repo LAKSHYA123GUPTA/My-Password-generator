@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { jwtKey } from "../config.js";
-import User from "../DB/dbindex.js";
+import User from "../db/index.js";
 export default async function initialFetchMiddleware(req, res, next) {
   const data = req.body.token;
   const deviceID = req.body.deviceId;

@@ -1,4 +1,4 @@
-import User from "../DB/dbindex.js";
+import User from "../db/index.js";
 
 export default async function siginMidlleware(req, res, next) {
   const username = req.body.username;

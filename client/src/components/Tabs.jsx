@@ -4,7 +4,7 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { add, genAvail, message, storePass, tabArray } from "../Atoms/UserAtom";
+import { add, genAvail, message, storePass, tabArray } from "../atoms/UserAtom";
 import IconButton from "@mui/material/IconButton";
 import Creator from "./SpAvatar";
 import { useEffect } from "react";

@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import "react-toastify/dist/ReactToastify.css";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { genAvail, uname } from "../Atoms/UserAtom";
+import { genAvail, uname } from "../atoms/UserAtom";
 const style = {
   position: "absolute",
   top: "50%",

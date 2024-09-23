@@ -1,14 +1,11 @@
 import { Router } from "express";
 import z from "zod";
-import User from "../DB/dbindex.js";
-import siginMidlleware from "../Middlewares/userMid.js";
+import User from "../db/index.js";
+import siginMidlleware from "../middlewares/userAuth.middleware.js";
 import jwt from "jsonwebtoken";
-import encryptUserId from "../crypto/encrypt.js";
-import { encryptionKey } from "../config.js";
-import decryptUserId from "../crypto/decrypt.js";
-import initialFetchMiddleware from "../Middlewares/fetchMid.js";
+import initialFetchMiddleware from "../middlewares/fetchDevId.middleware.js";
 import { jwtKey } from "../config.js";
-const specialCharacters = ["@", "#", "!", "$", "&"];
+
 const validSchema = z.object({
   username: z.string(),
 });

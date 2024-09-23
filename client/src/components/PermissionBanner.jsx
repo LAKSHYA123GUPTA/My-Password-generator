@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useSetRecoilState } from "recoil";
-import { browserPermitstore, permit } from "../Atoms/UserAtom";
+import { browserPermitstore, permit } from "../atoms/UserAtom";
 import deviceIDFetcher from "./deviceIdFetch";
 import { useState } from "react";
 

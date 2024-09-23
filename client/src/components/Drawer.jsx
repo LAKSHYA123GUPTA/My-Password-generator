@@ -7,7 +7,7 @@ import {
   tabArray,
   tempToken,
   tokenData,
-} from "../Atoms/UserAtom";
+} from "../atoms/UserAtom";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Addpass from "./Addpass";

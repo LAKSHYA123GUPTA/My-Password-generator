@@ -12,7 +12,7 @@ import {
   tabArray,
   tokenData,
   uname,
-} from "../Atoms/UserAtom";
+} from "../atoms/UserAtom";
 import Fabicon from "./FAB";
 import PermissionBanner from "./PermissionBanner";
 import Alert from "./Alert";
@@ -28,7 +28,7 @@ export default function Landing() {
   const browserpermit = useRecoilValue(browserPermitstore);
   const [browserAllow, setbrowserAllow] = useRecoilState(browserPermit);
   const [first, setFirst] = useRecoilState(firstTimer);
- 
+
   const remove = "tempData";
 
   if (
@@ -67,8 +67,7 @@ export default function Landing() {
     }
     if (finaldata.msg === "Allow auto-login") {
       setUname(finaldata.username);
-      if(genavail!==0)
-      setArray(finaldata.array);
+      if (genavail !== 0) setArray(finaldata.array);
       setn(n + 2);
 
       return;
@@ -99,34 +98,35 @@ export default function Landing() {
 
       if (info) {
         setTimeout(() => {
-
           fetching(info);
-          
         }, 400);
         setData(JSON.parse(info));
       }
-      if(genavail!==0)
-      setFirstCount((c) => c + 1);
-      
+      if (genavail !== 0) setFirstCount((c) => c + 1);
     }
-  }, [permited,genavail]);
+  }, [permited, genavail]);
 
   return (
     <div
-    
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "92.8vh",
         margin: 0,
-        backgroundImage:'url(/lock-key-best-password.png)',
-        backgroundSize:'cover',
-        
+        backgroundImage: "url(/lock-key-best-password.png)",
+        backgroundSize: "cover",
+
         padding: 0,
       }}
     >
-      Hi on Landing page.
+      <h1
+        style={{
+          color: "black",
+        }}
+      >
+        Hi on Landing page.
+      </h1>
       <DrawerCompo />
       <div style={{ position: "fixed", bottom: "80px", right: "90px" }}>
         {genavail !== 0 ? <Fabicon /> : null}

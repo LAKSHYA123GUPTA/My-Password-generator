@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { genAvail, isOpen} from "../Atoms/UserAtom";
+import { genAvail, isOpen} from "../atoms/UserAtom";
 export default function Appbar() {
   const navigate = useNavigate();
   const setIsOpen = useSetRecoilState(isOpen);

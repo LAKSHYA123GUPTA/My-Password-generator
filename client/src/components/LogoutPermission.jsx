@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { useState} from 'react';
 import { useNavigate} from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { Click, add, addOpen, browserPermit, browserPermitstore,firstCount, firstTimer, genAvail, hover, isOpen, message, pass, permit, remember, salt, storePass, tabArray, tempToken, tokenData, uname, user } from '../Atoms/UserAtom';
+import { Click, add, addOpen, browserPermit, browserPermitstore,firstCount, firstTimer, genAvail, hover, isOpen, message, pass, permit, remember, salt, storePass, tabArray, tempToken, tokenData, uname, user } from '../atoms/UserAtom';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 export default function LogoutPermission() {

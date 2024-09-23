@@ -1,1 +1,1 @@
-Run npm i separately in both the backend/ as well as frontend/, before using it after the cloning.
+Run npm i separately in both the server/ as well as client/, before using it after the cloning.
