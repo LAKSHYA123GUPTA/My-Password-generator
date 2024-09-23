@@ -17,6 +17,7 @@ import Fabicon from "./FAB";
 import PermissionBanner from "./PermissionBanner";
 import Alert from "./Alert";
 import DrawerCompo from "./Drawer";
+import { SERVER_URL } from "../constants";
 export default function Landing() {
   const [n, setn] = useState(0);
   const setUname = useSetRecoilState(uname);
@@ -49,7 +50,7 @@ export default function Landing() {
 
     let finaldata;
     try {
-      const res = await fetch("http://localhost:3000/user/auto", {
+      const res = await fetch(SERVER_URL+"/user/auto", {
         method: "POST",
         body: JSON.stringify({
           token,

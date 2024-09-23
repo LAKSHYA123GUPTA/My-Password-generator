@@ -30,6 +30,7 @@ import PermissionBanner from "./PermissionBanner";
 import CheckboxRemember from "./Checkbox";
 import convert, { generateSalt } from "./convert";
 import PasswordText from "./PasswordText";
+import { SERVER_URL } from "../constants";
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -188,7 +189,7 @@ export default function Signup() {
                     const resulted = await convert(password, salt);
 
                     const res = await fetch(
-                      "http://localhost:3000/user/signup",
+                      SERVER_URL+"/user/signup",
                       {
                         method: "POST",
                         body: JSON.stringify({

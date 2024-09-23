@@ -8,7 +8,6 @@ import FormControl from "@mui/material/FormControl";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { add, addOpen, message, storePass } from "../atoms/UserAtom";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
 export default function Addpass() {
   const [open, setOpen] = useRecoilState(addOpen);
   //   const [click, setClick] = useRecoilState(Click);
@@ -35,7 +34,7 @@ export default function Addpass() {
                 // onChange={handleChange}
                 // onClick={handleMenuOpen}
                 onChange={(e) => {
-                  setMessage(e.target.value);
+                  setMessage((e.target.value).toLowerCase());
                   // if(e.target.value!==""&&disable<=1)
                   //  setDisable(c=>c+1);
                 }}

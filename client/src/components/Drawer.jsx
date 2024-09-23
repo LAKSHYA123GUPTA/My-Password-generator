@@ -13,6 +13,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import Addpass from "./Addpass";
 import Tabs from "./Tabs";
 import { useEffect } from "react";
+import { SERVER_URL } from "../constants";
 export default function DrawerCompo() {
   const [isopen, setIsOpen] = useRecoilState(isOpen);
   const setAddOpen = useSetRecoilState(addOpen);
@@ -26,7 +27,7 @@ export default function DrawerCompo() {
     if (token && (temptoken === undefined || temptoken===null)) {
       // console.log(token.finalToken+"    from drawer.jsx");
       try {
-        const res = await fetch("http://localhost:3000/user/manager", {
+        const res = await fetch(SERVER_URL+"/user/manager", {
           method: "POST",
           body: JSON.stringify({
             token: token.finalToken,
@@ -66,7 +67,7 @@ export default function DrawerCompo() {
     }
     if (temptoken !== undefined && temptoken!==null) {
       try {
-        const res = await fetch("http://localhost:3000/user/manager", {
+        const res = await fetch(SERVER_URL+"/user/manager", {
           method: "POST",
           body: JSON.stringify({
             token: temptoken.finalToken,

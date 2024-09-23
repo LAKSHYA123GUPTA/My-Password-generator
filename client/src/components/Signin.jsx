@@ -29,6 +29,7 @@ import Alert from "./Alert";
 import PermissionBanner from "./PermissionBanner";
 import convert from "./convert";
 import PasswordText from "./PasswordText";
+import { SERVER_URL } from "../constants";
 export default function Signin() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -64,7 +65,7 @@ export default function Signin() {
     try {
       if (salted) {
         const converted = await convert(password, salted);
-        const res = await fetch("http://localhost:3000/user/signin", {
+        const res = await fetch(SERVER_URL+"/user/signin", {
           method: "POST",
           body: JSON.stringify({
             username: username,
@@ -217,7 +218,7 @@ export default function Signin() {
                     return;
                   }
                   try {
-                    const res = await fetch("http://localhost:3000/user/data", {
+                    const res = await fetch(SERVER_URL+"/user/data", {
                       method: "POST",
                       body: JSON.stringify({
                         username: username,

@@ -17,6 +17,7 @@ import { firstTimer, tempToken, uname } from "../atoms/UserAtom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import CopyPass from "./Copypass";
 import WarningComponent from "./WarningComponent";
+import { SERVER_URL } from "../constants";
 export default function Generate() {
   const [token, setToken] = useState(false);
   const [size, setSize] = useState(4);
@@ -80,7 +81,7 @@ export default function Generate() {
   
   async function func() {
     try {
-      const res = await fetch("http://localhost:3000/user/password", {
+      const res = await fetch(SERVER_URL+"/user/password", {
         method: "POST",
 
         body: JSON.stringify({
