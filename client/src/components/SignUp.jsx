@@ -187,7 +187,7 @@ export default function Signup() {
                   try {
                     const salt = generateSalt();
                     const resulted = await convert(password, salt);
-
+                    console.log(SERVER_URL)
                     const res = await fetch(
                       SERVER_URL+"/user/signup",
                       {
