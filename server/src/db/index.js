@@ -1,5 +1,20 @@
 import mongoose, { Schema, model } from "mongoose";
-mongoose.connect("mongodb://localhost:27017/Pass-Generator");
+
+export async function dbConnect(uri) {
+  try {
+    if (!uri) {
+      console.log("uri", uri);
+      throw new Error("URI not available from environment variables.");
+    }
+    const response = await mongoose.connect(uri,{
+      dbName : "passGen"
+    });
+    return response.connection.readyState;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const schema = new Schema({
   username: String,
   password: String,
